@@ -1,16 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuenta Regresiva y Check</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #countdown1 {
+            font-size: 2rem;
+            margin: 20px;
+        }
+        #myCheckbox1 {
+            margin: 10px;
+        }
+    </style>
 </head>
 <body>
-<input type="text" id="barcodeInput1">
-<input type="checkbox" id="checkbox1">
-<input type="checkbox" id="checkbox2">
-<input type="checkbox" id="checkbox3">
-<!-- Agrega más checkboxes según sea necesario -->
-<script   src="js/chec.js"></script>
-</body>
+<h1>Control de Lavadoras</h1>
+<label for="myCheckbox1">
+    <input type="checkbox" id="myCheckbox1" disabled>
+    Activar Cuenta Regresiva
+</label>
+<div id="countdown1">15:00</div>
 
+<script src="app.js"></script>
+</body>
 </html>

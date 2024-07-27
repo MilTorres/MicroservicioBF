@@ -3,7 +3,7 @@ package com.example.maeriklavanderia.controller;
 
 import com.example.maeriklavanderia.models.Usuario;
 import com.example.maeriklavanderia.repository.UsuarioDao;
-import com.example.maeriklavanderia.websocket.MyService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +22,7 @@ public class UsuarioController {
     @Autowired
     private UsuarioDao usuarioDao;
 
-    @Autowired
-    private MyService myService;
+
 
 
 
@@ -240,12 +239,6 @@ public class UsuarioController {
 
 
 
-
-    @PostMapping("/updateState")
-    public void updateState(@RequestParam String state) {
-        // Llama al servicio para actualizar el estado en la base de datos
-        myService.updateState(state);
-    }
 
 
 

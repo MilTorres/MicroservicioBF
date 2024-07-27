@@ -1,63 +1,73 @@
-console.log("entra a chec.js ")
-validateRFID(rfid);
+// Crear una nueva conexión WebSocket
+const socket = new WebSocket('ws://localhost:8080'); // Ajusta la URL y el puerto si es necesario
 
+// Manejar la apertura de la conexión
+socket.onopen = function(event) {
+    console.log('Conexión WebSocket abierta');
+};
 
-async function validateRFID(rfid) {
-    try {
-        const response = await fetch(`/check_uid/${rfid}`);
-        const data = await response.json();
+// Manejar los mensajes recibidos del servidor
+socket.onmessage = function(event) {
+    console.log('Mensaje recibido del servidor:', event.data);
+    // Procesar el mensaje y actualizar la UI
+    const estado = parseInt(event.data);
+    updateUI(estado);
+};
 
-        if (data.status === "registered") {
-            console.log("Conecta con clase CountdownTimer.js");
-            activateCheckbox(); // Llama a la función para activar el checkbox
-        } else {
-            console.log("RFID no registrado");
-        }
-    } catch (error) {
-        console.error("Error al validar RFID:", error);
-    }
-}
+// Manejar errores de conexión
+socket.onerror = function(error) {
+    console.error('Error en WebSocket:', error);
+};
 
-function activateCheckbox() {
-    // Lógica para activar el checkbox
-    const checkbox = document.getElementById('checkbox1'); // Cambia el ID según el checkbox que quieras activar
-    if (checkbox) {
+// Manejar el cierre de la conexión
+socket.onclose = function(event) {
+    console.log('Conexión WebSocket cerrada:', event);
+};
+
+// Función para actualizar el estado del `check` y la cuenta regresiva
+function updateUI(state) {
+    const checkbox = document.getElementById('myCheckbox1');
+    const countdownLabel = document.getElementById('countdown1');
+
+    if (state === 1) {
         checkbox.checked = true;
+        startCountdown(15 * 60); // 15 minutos en segundos
     } else {
-        console.log('No se encontró el checkbox con el ID: checkbox1');
+        checkbox.checked = false;
+        resetCountdown();
     }
 }
 
+// Función para iniciar la cuenta regresiva
+function startCountdown(duration) {
+    let timer = duration, minutes, seconds;
+    const countdownLabel = document.getElementById('countdown1');
+    const interval = setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+        countdownLabel.textContent = minutes + ":" + seconds;
 
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById('checkbox1').addEventListener('click', function(e) {
-        if (this.checked) {
-            let scannedCode = "yourRFIDcode"; // Aquí deberías obtener el código RFID que necesitas validar
-            validateRFID(scannedCode); // Validar el RFID
+        if (--timer < 0) {
+            timer = duration;
+            // Enviar mensaje al servidor para actualizar el estado si es necesario
+            socket.send('estado=0'); // Ejemplo de cómo enviar un mensaje al servidor
         }
-    });
-});
+    }, 1000);
 
-async function validateRFID(rfid) {
-    try {
-        const response = await fetch(`/check_uid/${rfid}`);
-        const data = await response.json();
-
-        if (data.status === "registered") {
-            console.log("Conecta con clase CountdownTimer.js");
-            startCountdown(); // Llama a la función para iniciar la cuenta regresiva
-        } else {
-            console.log("RFID no registrado");
-            document.getElementById('checkbox1').checked = false; // Desmarcar el checkbox si no está registrado
-        }
-    } catch (error) {
-        console.error("Error al validar RFID:", error);
-        document.getElementById('checkbox1').checked = false; // Desmarcar el checkbox en caso de error
-    }
+    // Guardar la referencia al intervalo para que se pueda limpiar si es necesario
+    countdownLabel.dataset.interval = interval;
 }
 
-function startCountdown() {
-    // Aquí va tu lógica para iniciar la cuenta regresiva
-    console.log("Iniciando cuenta regresiva...");
-    // Puedes llamar a cualquier función que tengas definida para manejar el CountdownTimer.js
+// Función para reiniciar la cuenta regresiva
+function resetCountdown() {
+    const countdownLabel = document.getElementById('countdown1');
+    countdownLabel.textContent = '15:00'; // Reestablecer a 15 minutos
+
+    // Limpiar el intervalo de cuenta regresiva si existe
+    if (countdownLabel.dataset.interval) {
+        clearInterval(countdownLabel.dataset.interval);
+        delete countdownLabel.dataset.interval;
+    }
 }

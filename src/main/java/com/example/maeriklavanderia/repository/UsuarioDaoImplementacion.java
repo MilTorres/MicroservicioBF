@@ -59,11 +59,29 @@ public class UsuarioDaoImplementacion implements UsuarioDao  {
             String query = "FROM Usuario WHERE rfid = :rfid";
             TypedQuery<Usuario> typedQuery = entityManager.createQuery(query, Usuario.class);
             typedQuery.setParameter("rfid", rfid);
+            System.out.println("----------rfid: "+rfid);
+
+
+
+            Usuario usuario = typedQuery.getSingleResult();
+            System.out.println("----------usuario: "+usuario);
+
+            // Si el usuario es encontrado, actualiza el estado en la tabla Lavadoras
+            if (usuario.getRfid().toString() !=  null) {
+                String updateQuery = "UPDATE Lavadoras SET estado = 1 WHERE id = 1";
+
+                entityManager.createNativeQuery(updateQuery).executeUpdate();
+                System.out.println("Se cambio a activo la lavadora 1 " );
+            }
+            
+
             return typedQuery.getSingleResult();
         } catch (NoResultException e) {
+            System.out.println("No existe el usuario");
             // No se encontró ningún resultado, devolver null
             return null;
         } catch (Exception e) {
+            System.out.println("No existe el usuario-catch 2");
             // Manejar otras excepciones si es necesario
             e.printStackTrace();
             return null;
