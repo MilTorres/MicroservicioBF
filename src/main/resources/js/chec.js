@@ -1,5 +1,5 @@
 // Crear una nueva conexión WebSocket
-const socket = new WebSocket('ws://localhost:8080'); // Ajusta la URL y el puerto si es necesario
+const socket = new WebSocket('ws://192.168.1.49:5000/ws'); // Ajusta la URL y el puerto si es necesario
 
 // Manejar la apertura de la conexión
 socket.onopen = function(event) {
@@ -8,7 +8,7 @@ socket.onopen = function(event) {
 
 // Manejar los mensajes recibidos del servidor
 socket.onmessage = function(event) {
-    console.log('Mensaje recibido del servidor:', event.data);
+    console.log('Mensaje recibido del servidor Lavadora Estado:', event.data);
     // Procesar el mensaje y actualizar la UI
     const estado = parseInt(event.data);
     updateUI(estado);
@@ -31,7 +31,7 @@ function updateUI(state) {
 
     if (state === 1) {
         checkbox.checked = true;
-        startCountdown(15 * 60); // 15 minutos en segundos
+        startCountdown(15); // 15 segundos
     } else {
         checkbox.checked = false;
         resetCountdown();
@@ -40,17 +40,16 @@ function updateUI(state) {
 
 // Función para iniciar la cuenta regresiva
 function startCountdown(duration) {
-    let timer = duration, minutes, seconds;
+    let timer = duration, seconds;
     const countdownLabel = document.getElementById('countdown1');
     const interval = setInterval(function () {
-        minutes = parseInt(timer / 60, 10);
         seconds = parseInt(timer % 60, 10);
-        minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
-        countdownLabel.textContent = minutes + ":" + seconds;
+        countdownLabel.textContent = "00:" + seconds;
 
         if (--timer < 0) {
-            timer = duration;
+            clearInterval(interval);
+            countdownLabel.textContent = '00:00'; // Finaliza la cuenta regresiva
             // Enviar mensaje al servidor para actualizar el estado si es necesario
             socket.send('estado=0'); // Ejemplo de cómo enviar un mensaje al servidor
         }
@@ -63,7 +62,7 @@ function startCountdown(duration) {
 // Función para reiniciar la cuenta regresiva
 function resetCountdown() {
     const countdownLabel = document.getElementById('countdown1');
-    countdownLabel.textContent = '15:00'; // Reestablecer a 15 minutos
+    countdownLabel.textContent = '00:15'; // Reestablecer a 15 segundos
 
     // Limpiar el intervalo de cuenta regresiva si existe
     if (countdownLabel.dataset.interval) {
