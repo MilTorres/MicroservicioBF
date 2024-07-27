@@ -21,7 +21,7 @@ socket.onclose = function(event) {
 };
 
 function startCountdown() {
-    // Implementa la lógica para iniciar la cuenta regresiva
+    // Implementa la lógica para iniciar la cuenta regresiva mt
     console.log('Iniciar cuenta regresiva');
 }
 
