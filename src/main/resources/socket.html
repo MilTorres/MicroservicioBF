@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Countdown</title>
+    <style>
+        #countdown {
+            font-size: 2em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>WebSocket Countdown</h1>
+<div id="countdown">0</div>
+
+<script>
+    const socket = new WebSocket('ws://localhost:8080/ws');
+
+    let countdownInterval;
+    let countdownValue = 10; // Inicializar la cuenta regresiva en 10 segundos
+
+    socket.onopen = function(event) {
+        console.log('Conectado al WebSocket');
+    };
+
+    socket.onmessage = function(event) {
+        const message = event.data;
+        console.log('Mensaje recibido: ' + message);
+
+        // Lógica para manejar el mensaje recibido (1 o 0)
+        if (message === '1') {
+            startCountdown();
+        } else {
+            stopCountdown();
+        }
+    };
+
+    socket.onclose = function(event) {
+        console.log('Desconectado del WebSocket');
+    };
+
+    function startCountdown() {
+        countdownValue = 10; // Reiniciar la cuenta regresiva a 10 segundos
+        document.getElementById('countdown').textContent = countdownValue;
+        clearInterval(countdownInterval);
+        countdownInterval = setInterval(function() {
+            countdownValue--;
+            document.getElementById('countdown').textContent = countdownValue;
+            if (countdownValue <= 0) {
+                clearInterval(countdownInterval);
+                document.getElementById('countdown').textContent = 'Tiempo agotado';
+            }
+        }, 1000);
+        console.log('Iniciar cuenta regresiva');
+    }
+
+    function stopCountdown() {
+        clearInterval(countdownInterval);
+        document.getElementById('countdown').textContent = 'Detenido';
+        console.log('Detener cuenta regresiva');
+    }
+</script>
+</body>
+</html>

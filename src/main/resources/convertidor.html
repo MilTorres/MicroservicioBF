@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Leer Tarjeta RFID</title>
+</head>
+<body>
+<input type="text" id="id" value="0460312736">
+<button onclick="convertToHex()">Encriptar Tarjeta</button>
+<p id="hexValue"></p>
+<a>0460312736 deb ser A0 D0 6F 1B </a>
+<script>
+    function convertToHex() {
+
+        const id = document.getElementById('id').value;
+
+
+        const numericValue = parseInt(id, 10);
+
+
+        const hexValue = numericValue.toString(16).toUpperCase();
+        const hexs= hexValue.substring(6,8)+" "+hexValue.substring(4,6)+" "+hexValue.substring(2,4)+" "+hexValue.substring(0,2);
+
+        // Mostrar el valor hexadecimal
+        document.getElementById('hexValue').textContent = 'Valor en Hexadecimal: ' + hexValue;
+        document.getElementById('hexValue').textContent = 'Valor en Hexadecimal: sub string  ' + hexs;
+    }
+
+
+</script>
+</body>
+</html>
