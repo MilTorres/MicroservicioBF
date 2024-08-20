@@ -84,5 +84,5 @@ app.get('/check_uid', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`App corriendo en http://192.168.1.49:${port}`);
+    console.log(`App corriendo en http://192.168.1.69:${port}`);
 });

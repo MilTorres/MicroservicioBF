@@ -111,6 +111,9 @@ body {
   background-color: #fdd300;
 }
 
+/* Estilo para el título h3 con la clase .lucir */
+
+
 
 .card-body {
   width: 1500px; /* Ajusta según sea necesario */
@@ -122,6 +125,17 @@ body {
 
 .card-body table {
   width: 100%;
+}
+.grey-qo-regular {
+  font-family: "Grey Qo", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.icon {
+  width: 24px; /* Ajusta el tamaño del icono según lo desees */
+  height: 24px; /* Ajusta el tamaño del icono según lo desees */
+  fill: #000; /* Cambia el color del icono si es necesario */
 }
 
 
@@ -292,11 +306,15 @@ a:focus {
   color: #ffffff;
   margin-top: 55px;
   text-transform: uppercase;
+  border-radius: 25px; /* Añade bordes redondeados aquí */
+  text-align: center; /* Asegura que el texto esté centrado */
+  text-decoration: none; /* Elimina el subrayado del texto */
 }
 
 .hero_section .hero_btn-box a:hover {
   background-color: #ffffff;
-  color: #00ff00;
+  color: #000000;
+  border-color: #000000; /* Cambia el color del borde en hover si es necesario */
 }
 
 .sub_page .about_section .about_container {

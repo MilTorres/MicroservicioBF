@@ -1,10 +1,13 @@
 package com.example.maeriklavanderia.controller;
 
 
+import com.example.maeriklavanderia.models.LoginRequest;
 import com.example.maeriklavanderia.models.Usuario;
 import com.example.maeriklavanderia.repository.UsuarioDao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -21,8 +24,6 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioDao usuarioDao;
-
-
 
 
 
@@ -235,8 +236,18 @@ public class UsuarioController {
         }
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<?> checkLogin(@RequestBody LoginRequest loginRequest) {
+        String correo = loginRequest.getEmail();
+        String pass = loginRequest.getPassword();
+        Usuario usuario = usuarioDao.validarLogin(correo,pass);
 
-
+        if (usuario == null) {
+            return ResponseEntity.status(404).body("Usuario no encontrado");
+        }
+        System.out.println("encontro usuario "+usuario+"y correo "+correo);
+        return ResponseEntity.ok(usuario);
+    }
 
 
 
@@ -252,5 +263,13 @@ public class UsuarioController {
     public void deleteUsuario(@PathVariable("id") Long id) {
         usuarioDao.deleteUsuario(id);
     }
+
+
+
+
+
+
+
+
 
 }

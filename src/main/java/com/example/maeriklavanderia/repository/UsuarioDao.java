@@ -17,4 +17,7 @@ public interface UsuarioDao  {
     void registrar(Usuario usuario);
 
     void actualizar(Long id, Usuario usuario);
+
+    Usuario validarLogin(String correo, String pass );
+
 }

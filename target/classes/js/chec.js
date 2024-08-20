@@ -1,18 +1,22 @@
 // Crear una nueva conexión WebSocket
-const socket = new WebSocket('ws://192.168.1.49:5000/ws'); // Ajusta la URL y el puerto si es necesario
+ const socket = new WebSocket('ws://192.168.1.69:5000/ws'); // Ajusta la URL y el puerto si es necesario
+
 
 // Manejar la apertura de la conexión
 socket.onopen = function(event) {
     console.log('Conexión WebSocket abierta');
+
 };
 
 // Manejar los mensajes recibidos del servidor
 socket.onmessage = function(event) {
     console.log('Mensaje recibido del servidor Lavadora Estado:', event.data);
     // Procesar el mensaje y actualizar la UI
+
     const estado = parseInt(event.data);
     console.log('estado:', estado);
     updateUI(estado);
+
 };
 
 // Manejar errores de conexión
@@ -40,6 +44,7 @@ function updateUI(state) {
 
 // Función para iniciar o continuar la cuenta regresiva
 function startCountdown() {
+
     const countdownLabel = document.getElementById('countdown1');
     let timer = parseInt(localStorage.getItem('countdownTime')) || 15; // Obtener tiempo restante o 15 segundos si no está definido
 
@@ -73,6 +78,7 @@ function startCountdown() {
 function updateCountdownLabel(seconds) {
     const countdownLabel = document.getElementById('countdown1');
     const displaySeconds = seconds < 10 ? "0" + seconds : seconds;
+
     countdownLabel.textContent = "00:" + displaySeconds;
 }
 

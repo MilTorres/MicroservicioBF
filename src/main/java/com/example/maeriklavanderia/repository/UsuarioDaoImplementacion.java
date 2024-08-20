@@ -109,4 +109,28 @@ public class UsuarioDaoImplementacion implements UsuarioDao  {
     }
 
 
+
+    @Transactional
+    @Override
+    public Usuario validarLogin(String correo , String pass) {
+        try {
+            String query = "FROM Usuario WHERE correo = :correo AND contrasena = :pass";
+            TypedQuery<Usuario> typedQuery = entityManager.createQuery(query, Usuario.class);
+            typedQuery.setParameter("correo", correo);
+            typedQuery.setParameter("pass", pass);
+
+            Usuario usuario = typedQuery.getSingleResult();
+            //System.out.println("contraseña en implements "+usuario);
+            //System.out.println("contraseña -----------> "+usuario.getContrasena());
+            return usuario;
+        } catch (NoResultException e) {
+            // Usuario no encontrado
+            return null;
+        } catch (Exception e) {
+            // Manejar otras excepciones si es necesario
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

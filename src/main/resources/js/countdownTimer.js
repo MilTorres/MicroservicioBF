@@ -1,5 +1,7 @@
 console.log("Conecta con clase CountdownTimer.js")
 
+
+
 // FIREBASE CONECCION
 // Importar los módulos de Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
