@@ -12,8 +12,21 @@ socket.onopen = function(event) {
 socket.onmessage = function(event) {
     console.log('Mensaje recibido del servidor Lavadora Estado:', event.data);
     // Procesar el mensaje y actualizar la UI
-
+    const estadoElemento = document.getElementById('lavadoraEstado');
     const estado = parseInt(event.data);
+    // Dependiendo del estado, puedes actualizar el texto o el estilo
+    const aux=0;
+    if (estado === 1) {
+
+        estadoElemento.textContent = 'La lavadora está activa';
+        estadoElemento.style.color = 'green'; // Cambia el color a verde si está activa
+    } else if (estado === 0) {
+        estadoElemento.textContent = 'La lavadora está inactiva';
+        estadoElemento.style.color = 'red'; // Cambia el color a rojo si está inactiva
+    } else {
+        estadoElemento.textContent = 'Estado desconocido';
+        estadoElemento.style.color = 'gray'; // Color gris para estado desconocido
+    }
     console.log('estado:', estado);
     updateUI(estado);
 

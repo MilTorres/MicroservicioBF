@@ -2,10 +2,7 @@ package com.example.maeriklavanderia.repository;
 
 
 import com.example.maeriklavanderia.models.Usuario;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
@@ -51,31 +48,37 @@ public class UsuarioDaoImplementacion implements UsuarioDao  {
         return typedQuery.getSingleResult();
     }
 
+
+
     @Transactional
     @Override
-    public Usuario obtenerPorRfId(String rfid)
-    {
+    public Usuario obtenerPorRfId(String rfid) {
         try {
+            // Obtener el usuario usando JPQL
             String query = "FROM Usuario WHERE rfid = :rfid";
             TypedQuery<Usuario> typedQuery = entityManager.createQuery(query, Usuario.class);
             typedQuery.setParameter("rfid", rfid);
-            System.out.println("----------rfid: "+rfid);
-
-
+            System.out.println("----------rfid: " + rfid);
 
             Usuario usuario = typedQuery.getSingleResult();
-            System.out.println("----------usuario: "+usuario);
+            System.out.println("----------usuario: " + usuario);
 
             // Si el usuario es encontrado, actualiza el estado en la tabla Lavadoras
-            if (usuario.getRfid().toString() !=  null) {
+            if (usuario.getRfid() != null) {
+                // Actualizar el estado de la lavadora usando una consulta nativa
                 String updateQuery = "UPDATE Lavadoras SET estado = 1 WHERE id = 1";
-
                 entityManager.createNativeQuery(updateQuery).executeUpdate();
-                System.out.println("Se cambio a activo la lavadora 1 " );
-            }
-            
 
-            return typedQuery.getSingleResult();
+                // Actualizar el saldo del usuario usando JPQL
+                String updateSaldo = "UPDATE Usuario SET saldo = saldo - 10 WHERE rfid = :rfid";
+                Query querySaldo = entityManager.createQuery(updateSaldo);
+                querySaldo.setParameter("rfid", rfid);
+                querySaldo.executeUpdate();
+
+                System.out.println("Se cambió a activo la lavadora 1 y se restó 10 a " + rfid);
+            }
+
+            return usuario;
         } catch (NoResultException e) {
             System.out.println("No existe el usuario");
             // No se encontró ningún resultado, devolver null
@@ -87,6 +90,12 @@ public class UsuarioDaoImplementacion implements UsuarioDao  {
             return null;
         }
     }
+
+
+
+
+
+
     @Transactional
     public void actualizar(Long id, Usuario usuario) {
         // Encuentra el usuario existente

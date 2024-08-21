@@ -22,6 +22,97 @@
   font-weight: bold;
 }
 
+
+
+
+
+.product_section {
+  padding: 50px 0;
+}
+
+.custom_heading {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.container.layout_padding2 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.img-box {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.img-box:hover {
+  transform: scale(1.05);
+}
+
+.masbtn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+}
+
+.masbtn:hover {
+  background-color: #0056b3;
+}
+
+/* Lightbox */
+.lightbox {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.lightbox-image {
+  max-width: 90%;
+  max-height: 80%;
+  border: 3px solid #fff;
+  border-radius: 10px;
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 40px;
+  color: #fff;
+  cursor: pointer;
+}
+
+
+
+
+
+
 h1,
 h2,
 h3 {
@@ -68,7 +159,7 @@ body {
 }
 
 .btnregistro {
-  background-color: #FFA500; /* Color naranja */
+  background-color: #eeeeee; /* Color naranja */
   color: #ffffff; /* Texto blanco para contraste */
   border-radius: 5000px; /* Bordes circulares */
   font-size: 1.55rem; /* Tamaño de fuente más grande */
@@ -108,7 +199,7 @@ body {
 
 .contact_section{
   padding: 50px 100px;
-  background-color: #fdd300;
+  background-color: #eeeeee;
 }
 
 /* Estilo para el título h3 con la clase .lucir */
@@ -184,6 +275,7 @@ body {
   text-align: center;
   text-transform: uppercase;
 }
+
 
 a,
 a:hover,
@@ -523,8 +615,8 @@ a:focus {
   min-width: 225px;
   min-height: 225px;
   border-radius: 100%;
-  background: -webkit-gradient(linear, left top, right top, from(#afad04), to(#5da802));
-  background: linear-gradient(to right, #afad04, #5da802);
+  background: -webkit-gradient(linear, left top, right top, from(#000000), to(#8e8b8b));
+  background: linear-gradient(to right, #000000, #8e8b8b);
   margin-right: 15px;
 }
 
@@ -534,8 +626,8 @@ a:focus {
 
 .client_section .detail_box {
   padding: 25px;
-  background: -webkit-gradient(linear, left top, left bottom, from(#afad04), to(#5da802));
-  background: linear-gradient(to bottom, #afad04, #5da802);
+  background: -webkit-gradient(linear, left top, left bottom, from(#000000), to(#8e8b8b));
+  background: linear-gradient(to bottom, #000000, #8e8b8b);
   color: #ffffff;
   display: -webkit-box;
   display: -ms-flexbox;

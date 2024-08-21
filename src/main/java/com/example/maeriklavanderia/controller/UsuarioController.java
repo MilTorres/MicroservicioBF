@@ -4,6 +4,8 @@ package com.example.maeriklavanderia.controller;
 import com.example.maeriklavanderia.models.LoginRequest;
 import com.example.maeriklavanderia.models.Usuario;
 import com.example.maeriklavanderia.repository.UsuarioDao;
+import com.example.maeriklavanderia.service.BackupMssqlFirebase;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,9 @@ import java.util.Optional;
 //para posteriormente el contenedor pueda gestionarla
 @RestController
 public class UsuarioController {
+
+    @Autowired
+    private BackupMssqlFirebase backupDataToFirestore;
 
 
     @Autowired
@@ -267,6 +272,16 @@ public class UsuarioController {
 
 
 
+
+    @GetMapping(value = "/backup")
+    public String backupData() {
+        try {
+            backupDataToFirestore.backupDataToFirestore();
+            return "Backup completed successfully";
+        } catch (Exception e) {
+            return "Backup failed: " + e.getMessage();
+        }
+    }
 
 
 

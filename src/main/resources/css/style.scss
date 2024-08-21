@@ -44,6 +44,28 @@ h3 {
   @include secondary-font();
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @mixin hero_bt($col1, $col2, $pad1, $pad2) {
   display: inline-block;
   padding: $pad1 $pad2;

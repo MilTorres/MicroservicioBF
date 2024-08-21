@@ -1,7 +1,7 @@
 document.getElementById('backupBtn').addEventListener('click', async function() {
     try {
-        const response = await fetch('/api/backup', {
-            method: 'POST'
+        const response = await fetch('/backup', {
+            method: 'GET'
         });
 
         if (response.ok) {
