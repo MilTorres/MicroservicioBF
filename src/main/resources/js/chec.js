@@ -15,7 +15,7 @@ socket.onmessage = function(event) {
     const estadoElemento = document.getElementById('lavadoraEstado');
     const estado = parseInt(event.data);
     // Dependiendo del estado, puedes actualizar el texto o el estilo
-    const aux=0;
+
     if (estado === 1) {
 
         estadoElemento.textContent = 'La lavadora está activa';
